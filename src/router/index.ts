@@ -11,6 +11,18 @@ const routes: Array<RouteRecordRaw> = [
     name: "grid",
     component: () => import(/* webpackChunkName: "grid" */ "../pages/Grid.vue"),
   },
+  {
+    path: "/gridarea",
+    name: "gridarea",
+    component: () =>
+      import(/* webpackChunkName: "gridarea" */ "../pages/Gridarea.vue"),
+  },
+  {
+    path: "/gridarea2",
+    name: "gridarea2",
+    component: () =>
+      import(/* webpackChunkName: "gridarea2" */ "../pages/Gridarea2.vue"),
+  },
 ];
 
 const router = createRouter({
