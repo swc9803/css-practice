@@ -23,6 +23,17 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "gridarea2" */ "../pages/Gridarea2.vue"),
   },
+  {
+    path: "/wave",
+    name: "wave",
+    component: () => import(/* webpackChunkName: "wave" */ "../pages/Wave.vue"),
+  },
+  {
+    path: "/collision",
+    name: "collision",
+    component: () =>
+      import(/* webpackChunkName: "collision" */ "../pages/Collision.vue"),
+  },
 ];
 
 const router = createRouter({
