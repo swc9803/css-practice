@@ -34,6 +34,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "collision" */ "../pages/Collision.vue"),
   },
+  {
+    path: "/spining",
+    name: "spining",
+    component: () =>
+      import(/* webpackChunkName: "spining" */ "../pages/Spining.vue"),
+  },
 ];
 
 const router = createRouter({

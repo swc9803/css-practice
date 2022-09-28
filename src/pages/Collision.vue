@@ -17,7 +17,7 @@ class Ball {
     this.x = diameter + (Math.random() * stageWidth - diameter);
     this.y = diameter + (Math.random() * stageHeight - diameter);
   }
-
+  x;
   draw(ctx, stageWidth, stageHeight) {
     this.x += this.vx;
     this.y += this.vy;
@@ -75,6 +75,15 @@ class App {
 }
 onMounted(() => {
   new App();
+  const dateFormatter = function () {
+    let theDay = new Date();
+    let year = theDay.getFullYear();
+    let month = "0" + (theDay.getMonth() + 1);
+    let date = "0" + theDay.getDate();
+
+    return year + "." + month.slice(-2) + "." + date.slice(-2);
+  };
+  console.log(dateFormatter());
 });
 </script>
 
