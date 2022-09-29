@@ -1,5 +1,4 @@
 <template>
-  <!-- <h1>gridarea</h1> -->
   <section class="container">
     <img
       src="https://images.unsplash.com/photo-1661933021480-75b708d5648f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"

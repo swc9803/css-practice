@@ -1,5 +1,4 @@
 <template>
-  <!-- <h1>gridarea2</h1> -->
   <div class="container">
     <header>header</header>
     <main><Gridarea /></main>

@@ -29,16 +29,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "wave" */ "../pages/Wave.vue"),
   },
   {
-    path: "/collision",
-    name: "collision",
+    path: "/scrollvideo",
+    name: "scrollvideo",
     component: () =>
-      import(/* webpackChunkName: "collision" */ "../pages/Collision.vue"),
+      import(/* webpackChunkName: "scrollvideo" */ "../pages/ScrollVideo.vue"),
   },
   {
-    path: "/spining",
-    name: "spining",
+    path: "/tearimg",
+    name: "tearimg",
     component: () =>
-      import(/* webpackChunkName: "spining" */ "../pages/Spining.vue"),
+      import(/* webpackChunkName: "tearimg" */ "../pages/TearImg.vue"),
   },
 ];
 
