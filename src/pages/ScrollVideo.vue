@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading">loading</div>
+  <div v-if="loading">loading...</div>
   <div v-show="!loading" class="videoWrap">
     <video
       ref="video"
@@ -17,9 +17,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const loading = ref(false);
 const video = ref();
 const controller = ref<HTMLDivElement>();
+const loading = ref<boolean>(false);
 
 onMounted(() => {
   window.scrollTo(0, 0);
@@ -27,22 +27,22 @@ onMounted(() => {
 
   function once(el: Element, event: any, fn: any, options: boolean) {
     const onceFn = function (this: string) {
-      //   el.removeEventListener(event, onceFn);
+      el.removeEventListener(event, onceFn);
       fn.apply(this, arguments);
     };
     el.addEventListener(event, onceFn, options);
     return onceFn;
   }
 
-  once(
-    document.documentElement,
-    "touchstart",
-    () => {
-      video.value.play();
-      video.value.pause();
-    },
-    false
-  );
+  //  비디오 로딩 후
+  video.value.addEventListener("loadedmetadata", () => {
+    loading.value = false;
+    scrollAnimation.fromTo(
+      video.value,
+      { currentTime: 0 },
+      { currentTime: video.value.duration || 1 }
+    );
+  });
 
   //   스크롤 컨트롤
   const scrollAnimation = gsap.timeline({
@@ -53,21 +53,6 @@ onMounted(() => {
       scrub: 0.5,
     },
   });
-
-  //  비디오 로딩 후
-  once(
-    video.value,
-    "loadedmetadata",
-    () => {
-      loading.value = false;
-      scrollAnimation.fromTo(
-        video.value,
-        { currentTime: 0 },
-        { currentTime: video.value.duration || 1 }
-      );
-    },
-    false
-  );
 });
 </script>
 
@@ -76,6 +61,7 @@ onMounted(() => {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  pointer-events: none;
   video {
     position: fixed;
     top: 50%;
@@ -83,6 +69,7 @@ onMounted(() => {
     min-width: 100%;
     min-height: 100%;
     transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 }
 .controller {
