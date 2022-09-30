@@ -4,17 +4,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted, ref } from "vue";
 import gsap from "gsap";
 import * as THREE from "three";
 
-const canvasRef = ref<HTMLCanvasElement>();
+const canvasRef = ref();
 
 onMounted(() => {
   const BackgroundGradient = (colorA, colorB) => {
     let mesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2, 1, 1),
+      new THREE.PlaneGeometry(2, 2, 1, 1),
       new THREE.ShaderMaterial({
         uniforms: {
           uColorA: { value: new THREE.Color(colorA) },
@@ -48,19 +48,7 @@ onMounted(() => {
   };
 
   class Stage {
-    canvas: string;
-    scene: string;
-    sizes: {
-      width: number;
-      height: number;
-    };
-    background: string;
-    camera: string;
-    constructor(
-      domCanvasElement: string,
-      topColor: string,
-      bottomColor: string
-    ) {
+    constructor(domCanvasElement, topColor, bottomColor) {
       this.canvas = domCanvasElement;
       this.scene = new THREE.Scene();
 
@@ -142,7 +130,7 @@ onMounted(() => {
   class Loader {
     constructor(color = "black", shadow = "white", size = 1) {
       this.mesh = new THREE.Mesh(
-        new THREE.PlaneBufferGeometry(2, 2, 1, 1),
+        new THREE.PlaneGeometry(2, 2, 1, 1),
         new THREE.ShaderMaterial({
           uniforms: {
             uColor: { value: new THREE.Color(color) },
@@ -391,7 +379,7 @@ onMounted(() => {
         },
       ];
 
-      this.sheetPlane = new THREE.PlaneBufferGeometry(
+      this.sheetPlane = new THREE.PlaneGeometry(
         this.sheetSettings.width / 2 + this.sheetSettings.tearWidth / 2,
         this.sheetSettings.height,
         this.sheetSettings.widthSegments,
@@ -531,8 +519,7 @@ onMounted(() => {
   }
 
   // stage
-  const canvas = canvasRef.value;
-  const stage = new Stage(canvas, "#F1EBE4", "#D5C3AE");
+  const stage = new Stage(canvasRef.value, "#F1EBE4", "#D5C3AE");
 
   // loader
   const loaderScreen = new Loader("black");
@@ -545,7 +532,6 @@ onMounted(() => {
       { progress: 1, alpha: 0, duration: 0.5, ease: "power4.inOut" },
       0
     );
-
     init();
   });
 
@@ -732,12 +718,8 @@ onMounted(() => {
     addEventListener("touchend", up);
   };
 
-  // tick
-  const clock = new THREE.Clock();
-
   const tick = () => {
-    const elapsedTime = clock.getElapsedTime();
-    stage.render(elapsedTime);
+    stage.render();
     requestAnimationFrame(tick);
   };
   tick();

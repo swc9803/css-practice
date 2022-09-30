@@ -1,13 +1,17 @@
 <template>
-  <div v-if="loading">loading...</div>
-  <div v-show="!loading" class="videoWrap">
-    <video
-      ref="video"
-      src="https://assets.codepen.io/39255/output_960.mp4"
-      playsinline="true"
-    />
+  <div v-if="loading" style="position: absolute">loading...</div>
+  <div v-show="!loading">
+    <div class="content">content</div>
+    <div class="videoWrap">
+      <div ref="controller" class="controller" />
+      <video
+        ref="video"
+        src="https://assets.codepen.io/39255/output_960.mp4"
+        playsinline="true"
+      />
+    </div>
+    <div class="content">content</div>
   </div>
-  <div ref="controller" class="controller" />
 </template>
 
 <script setup lang="ts">
@@ -25,15 +29,6 @@ onMounted(() => {
   window.scrollTo(0, 0);
   loading.value = true;
 
-  function once(el: Element, event: any, fn: any, options: boolean) {
-    const onceFn = function (this: string) {
-      el.removeEventListener(event, onceFn);
-      fn.apply(this, arguments);
-    };
-    el.addEventListener(event, onceFn, options);
-    return onceFn;
-  }
-
   //  비디오 로딩 후
   video.value.addEventListener("loadedmetadata", () => {
     loading.value = false;
@@ -46,10 +41,9 @@ onMounted(() => {
 
   //   스크롤 컨트롤
   const scrollAnimation = gsap.timeline({
-    defaults: { duration: 1 },
     scrollTrigger: {
       trigger: controller.value,
-      //   start: "top top",
+      start: "top top",
       scrub: 0.5,
     },
   });
@@ -58,21 +52,28 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .videoWrap {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  pointer-events: none;
+  width: 100vw;
+  min-height: 500vh;
   video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    transform: translate(-50%, -50%);
+    position: sticky;
+    top: 0;
+    width: 100vw;
     pointer-events: none;
   }
 }
 .controller {
-  height: 500vh;
+  position: absolute;
+  min-height: 500vh;
+  overflow: hidden;
+}
+.content {
+  min-width: 100vw;
+  min-height: 100vh;
+  background: gray;
+}
+@media screen and (max-aspect-ratio: 1200 / 800) {
+  video {
+    height: 100vh;
+  }
 }
 </style>
